@@ -1,3 +1,5 @@
+% Eduardo Alberto Sanchez Alvarado A01195815
+
 % Grafo g
 nodo(g, a).
 nodo(g, b).
