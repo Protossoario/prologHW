@@ -24,3 +24,17 @@ arcos(Grafo, L) :- findall(X, nodo(Grafo, X), Nodos), cuenta_arcos(Grafo, Nodos,
 % Recibe el grafo y una lista de nodos; regresa una lista con los nodos y la cantidad de arcos que tienen dentro del grafo.
 cuenta_arcos(_, [], []).
 cuenta_arcos(Grafo, [Nodo|Resto], Lista) :- findall(X, arco(Grafo, Nodo, X, _), Arcos), cuenta_arcos(Grafo, Resto, Lista2), !, length(Arcos, CantArcos), Lista = [[Nodo, CantArcos] | Lista2].
+
+% Regresa el costo de atravesar de un nodo a otro, o un cero si no hay arco que no los conecte.
+costo(Grafo, Nodo1, Nodo2, C) :- arco(Grafo, Nodo1, Nodo2, C).
+costo(Grafo, Nodo1, Nodo2, 0) :- not(arco(Grafo, Nodo1, Nodo2, _)).
+
+% Obtiene la lista de nodos del grafo y para cada uno obtiene su lista de adyacencia, regresando una lista de todas las lista de adyacencia del grafo (matriz de adyacencia).
+adyacencias(Grafo, L) :- findall(X, nodo(Grafo, X), Nodos), maplist(lista_adyacencias(Grafo, Nodos), Nodos, L).
+
+% Regresa una lista de adyacencias encabezada por el nodo dentro del grafo.
+lista_adyacencias(Grafo, Nodos, Nodo, Lista) :- costos(Grafo, Nodo, Nodos, Costos), Lista = [Nodo | Costos].
+
+% Regresa una lista de costos desde el nodo hacia los nodos de la lista dentro del grafo.
+costos(_, _, [], []).
+costos(Grafo, Nodo1, [Nodo2|Resto], Costos) :- costo(Grafo, Nodo1, Nodo2, C), costos(Grafo, Nodo1, Resto, Costos2), !, Costos = [C|Costos2].
