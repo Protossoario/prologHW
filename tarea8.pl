@@ -1,5 +1,13 @@
 % Eduardo Alberto Sanchez Alvarado A01195815
 
+% Predicado que verifica que la segunda lista sea un subconjunto de la primera
+subconjunto([], []).
+subconjunto([X|Xs],[X|Ys]) :- subconjunto(Xs, Ys).
+subconjunto([_|Xs], Ys) :- subconjunto(Xs, Ys).
+
+% Obtiene todos los posibles subconjuntos de la lista y los guarda en Resultado
+potencia(Lista, Resultado) :- findall(X, subconjunto(Lista, X), Resultado).
+
 % Grafo g
 nodo(g, a).
 nodo(g, b).
