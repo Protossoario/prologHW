@@ -1,5 +1,9 @@
 % Eduardo Alberto Sanchez Alvarado A01195815
 
+aplana([], []).
+aplana([X|Xs], Y) :- append(X, Xs, Z), !, aplana(Z, Y).
+aplana([X|Xs], [X|Ys]) :- aplana(Xs, Ys).
+
 % Predicado que verifica que la segunda lista sea un subconjunto de la primera
 subconjunto([], []).
 subconjunto([X|Xs],[X|Ys]) :- subconjunto(Xs, Ys).
